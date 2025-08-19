@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sangeet Sagar - Music & Video Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+        .glassmorphism {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .main-content {
+            display: block;
+        }
+        .hidden-page {
+            display: none;
+        }
+        .brand-gradient {
+            background: linear-gradient(to right, #ec4899, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .card-hover:hover .play-icon {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .play-icon {
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+        /* Custom scrollbar for a modern look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1f1f1f;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #8b5cf6;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ec4899;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Main Container -->
+    <div class="min-h-screen flex flex-col">
+
+        <!-- Header -->
+        <header class="glassmorphism sticky top-0 z-50 shadow-lg">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center justify-between h-16">
+                    <div class="flex items-center">
+                        <i class="fas fa-music text-3xl brand-gradient"></i>
+                        <h1 class="ml-3 text-2xl font-bold tracking-tighter brand-gradient">Sangeet Sagar</h1>
+                    </div>
+                    <nav class="hidden md:flex items-center space-x-4">
+                        <a href="#" onclick="showPage('home')" class="nav-link text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out">Home</a>
+                        <a href="#" onclick="showPage('admin')" class="nav-link text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out">Admin Dashboard</a>
+                        <a href="#" onclick="showPage('profile')" class="nav-link text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out">Profile</a>
+                    </nav>
+                    <div class="md:hidden">
+                        <button id="mobile-menu-button" class="text-gray-300 hover:text-white focus:outline-none">
+                            <i class="fas fa-bars text-2xl"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="md:hidden hidden">
+                <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                    <a href="#" onclick="showPage('home')" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Home</a>
+                    <a href="#" onclick="showPage('admin')" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Admin Dashboard</a>
+                    <a href="#" onclick="showPage('profile')" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Profile</a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="flex-grow">
+
+            <!-- Home Page -->
+            <div id="home-page" class="main-content container mx-auto p-4 sm:p-6 lg:p-8">
+                <!-- Hero Section -->
+                <div class="bg-cover bg-center h-64 md:h-80 rounded-2xl shadow-2xl flex items-center justify-center text-center p-4" style="background-image: url('https://placehold.co/1200x400/1a1a1a/ec4899?text=Feel+The+Music');">
+                    <div>
+                        <h2 class="text-4xl md:text-6xl font-extrabold text-white tracking-tight">Your Universe of Sound</h2>
+                        <p class="mt-4 text-lg md:text-xl text-gray-300 max-w-2xl mx-auto">Discover, stream, and download the latest hits and timeless classics for free.</p>
+                    </div>
+                </div>
+
+                <!-- Category Filters -->
+                <div class="my-8">
+                    <h3 class="text-2xl font-bold mb-4 text-white">Browse by Category</h3>
+                    <div id="category-filters" class="flex flex-wrap gap-3">
+                        <button onclick="filterContent('All')" class="category-btn bg-purple-600 text-white px-5 py-2 rounded-full font-semibold shadow-md hover:bg-purple-700 transition duration-300">All</button>
+                        <button onclick="filterContent('Timli')" class="category-btn bg-gray-700 text-gray-300 px-5 py-2 rounded-full font-semibold hover:bg-pink-600 hover:text-white transition duration-300">Timli</button>
+                        <button onclick="filterContent('Hindi')" class="category-btn bg-gray-700 text-gray-300 px-5 py-2 rounded-full font-semibold hover:bg-pink-600 hover:text-white transition duration-300">Hindi</button>
+                        <button onclick="filterContent('Mashup')" class="category-btn bg-gray-700 text-gray-300 px-5 py-2 rounded-full font-semibold hover:bg-pink-600 hover:text-white transition duration-300">Mashup</button>
+                        <button onclick="filterContent('Chill Out')" class="category-btn bg-gray-700 text-gray-300 px-5 py-2 rounded-full font-semibold hover:bg-pink-600 hover:text-white transition duration-300">Chill Out</button>
+                    </div>
+                </div>
+
+                <!-- Content Grid -->
+                <div id="content-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 md:gap-6">
+                    <!-- Dynamic content will be injected here -->
+                </div>
+            </div>
+
+            <!-- Admin Dashboard Page -->
+            <div id="admin-page" class="hidden-page container mx-auto p-4 sm:p-6 lg:p-8">
+                <h2 class="text-3xl font-bold mb-6 brand-gradient">Admin Dashboard</h2>
+                
+                <!-- Add/Edit Form -->
+                <div class="glassmorphism p-6 rounded-2xl shadow-xl mb-8">
+                    <h3 id="form-title" class="text-2xl font-semibold mb-4 text-white">Add New Content</h3>
+                    <form id="content-form" class="space-y-4">
+                        <input type="hidden" id="edit-id">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <input type="text" id="title" placeholder="Title" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500" required>
+                            <input type="text" id="artist" placeholder="Artist Name" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500" required>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <select id="category" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500" required>
+                                <option value="">Select Category</option>
+                                <option value="Timli">Timli</option>
+                                <option value="Hindi">Hindi</option>
+                                <option value="Mashup">Mashup</option>
+                                <option value="Chill Out">Chill Out</option>
+                            </select>
+                            <div class="flex items-center space-x-4 text-white">
+                                <label><input type="radio" name="type" value="MP3" class="mr-2" checked> MP3</label>
+                                <label><input type="radio" name="type" value="MP4" class="mr-2"> MP4</label>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                             <input type="text" id="youtubeId" placeholder="YouTube Video ID (e.g., dQw4w9WgXcQ)" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500">
+                             <input type="text" id="driveLink" placeholder="Google Drive Download Link" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500" required>
+                        </div>
+                        <input type="text" id="thumbnail" placeholder="Image URL for Thumbnail" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500" required>
+                        
+                        <div class="flex items-center space-x-4">
+                            <button type="submit" class="bg-gradient-to-r from-pink-500 to-purple-600 text-white font-bold py-2 px-6 rounded-full hover:opacity-90 transition duration-300 shadow-lg">Save Content</button>
+                            <button type="button" id="cancel-edit-btn" onclick="resetForm()" class="bg-gray-600 text-white font-bold py-2 px-6 rounded-full hover:bg-gray-700 transition duration-300 shadow-lg hidden">Cancel Edit</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Content Management Table -->
+                <div class="glassmorphism p-6 rounded-2xl shadow-xl overflow-x-auto">
+                    <h3 class="text-2xl font-semibold mb-4 text-white">Manage Content</h3>
+                    <table class="w-full text-left">
+                        <thead class="border-b border-gray-700">
+                            <tr>
+                                <th class="p-3">Title</th>
+                                <th class="p-3 hidden md:table-cell">Artist</th>
+                                <th class="p-3 hidden sm:table-cell">Category</th>
+                                <th class="p-3 hidden lg:table-cell">Type</th>
+                                <th class="p-3">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="content-table-body">
+                            <!-- Dynamic rows will be injected here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Profile Page -->
+            <div id="profile-page" class="hidden-page container mx-auto p-4 sm:p-6 lg:p-8">
+                 <div class="max-w-2xl mx-auto glassmorphism rounded-2xl shadow-2xl p-8 text-center">
+                    <img class="w-32 h-32 rounded-full mx-auto -mt-20 border-4 border-purple-500 shadow-lg" src="https://placehold.co/128x128/1a1a1a/ffffff?text=User" alt="Profile Picture">
+                    <h2 class="text-3xl font-bold mt-4 text-white">Admin User</h2>
+                    <p class="text-purple-400 mt-1">Website Manager</p>
+                    <p class="text-gray-400 mt-4 max-w-md mx-auto">This is a static profile page. In a full application, this area would display user-specific information, playlists, and download history.</p>
+                    <div class="mt-6 flex justify-center gap-4">
+                        <a href="#" class="bg-pink-600 text-white px-6 py-2 rounded-full font-semibold hover:bg-pink-700 transition duration-300">Settings</a>
+                        <a href="#" class="bg-gray-700 text-gray-300 px-6 py-2 rounded-full font-semibold hover:bg-gray-600 transition duration-300">Log Out</a>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-gray-900 mt-8">
+            <div class="container mx-auto py-6 px-4 sm:px-6 lg:px-8 text-center text-gray-400">
+                <p>&copy; 2024 Sangeet Sagar. All Rights Reserved.</p>
+                <p class="text-sm">Your ultimate destination for free music and video downloads.</p>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Video Player Modal -->
+    <div id="video-modal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 hidden">
+        <div class="bg-gray-900 rounded-lg shadow-2xl w-11/12 md:w-3/4 lg:w-1/2 relative">
+            <button id="close-modal" class="absolute -top-4 -right-4 text-white bg-pink-600 rounded-full h-10 w-10 flex items-center justify-center text-2xl z-10">&times;</button>
+            <div id="modal-content" class="aspect-w-16 aspect-h-9">
+                <!-- YouTube iframe will be injected here -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Custom Alert/Message Box -->
+    <div id="message-box" class="fixed bottom-5 right-5 bg-gradient-to-r from-pink-500 to-purple-600 text-white py-3 px-6 rounded-lg shadow-2xl transform translate-x-full transition-transform duration-500 ease-in-out">
+        <p id="message-text"></p>
+    </div>
+
+
+    <script>
+        // --- Basic UI and Navigation ---
+
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        function showPage(pageId) {
+            document.querySelectorAll('.main-content, .hidden-page').forEach(page => {
+                page.style.display = 'none';
+            });
+            document.getElementById(`${pageId}-page`).style.display = 'block';
+            // Close mobile menu on navigation
+            if (!mobileMenu.classList.contains('hidden')) {
+                mobileMenu.classList.add('hidden');
+            }
+            window.scrollTo(0, 0);
+        }
+
+        // --- Database Simulation using localStorage ---
+        
+        // Initial sample data
+        const initialData = [
+            { id: 1, title: "Kesariya", artist: "Arijit Singh", category: "Hindi", type: "MP4", youtubeId: "BddP6PYo2gs", driveLink: "#", thumbnail: "https://i.ytimg.com/vi/BddP6PYo2gs/hqdefault.jpg" },
+            { id: 2, title: "Jhoome Jo Pathaan", artist: "Arijit Singh", category: "Hindi", type: "MP4", youtubeId: "YxWlaYCA8MU", driveLink: "#", thumbnail: "https://i.ytimg.com/vi/YxWlaYCA8MU/hqdefault.jpg" },
+            { id: 3, title: "Timli Dance Mix", artist: "DJ Rahul", category: "Timli", type: "MP3", youtubeId: "", driveLink: "#", thumbnail: "https://placehold.co/300x300/ec4899/ffffff?text=Timli+Hit" },
+            { id: 4, title: "Lofi Chill Mix", artist: "Various Artists", category: "Chill Out", type: "MP3", youtubeId: "DW_q-y6Gmas", driveLink: "#", thumbnail: "https://i.ytimg.com/vi/DW_q-y6Gmas/hqdefault.jpg" },
+            { id: 5, title: "Bollywood Mashup 2023", artist: "DJ Chetas", category: "Mashup", type: "MP4", youtubeId: "p-f9P6To_bA", driveLink: "#", thumbnail: "https://i.ytimg.com/vi/p-f9P6To_bA/hqdefault.jpg" }
+        ];
+
+        // Function to get content from localStorage
+        function getContentData() {
+            const data = localStorage.getItem('contentData');
+            if (!data) {
+                // If no data, set initial data
+                localStorage.setItem('contentData', JSON.stringify(initialData));
+                return initialData;
+            }
+            return JSON.parse(data);
+        }
+
+        // Function to save content to localStorage
+        function saveContentData(data) {
+            localStorage.setItem('contentData', JSON.stringify(data));
+        }
+
+        // --- Home Page Content Rendering ---
+
+        const contentGrid = document.getElementById('content-grid');
+
+        function renderContent(filter = 'All') {
+            contentGrid.innerHTML = '';
+            const data = getContentData();
+            const filteredData = filter === 'All' ? data : data.filter(item => item.category === filter);
+
+            if (filteredData.length === 0) {
+                contentGrid.innerHTML = `<p class="col-span-full text-center text-gray-400">No content found in this category.</p>`;
+                return;
+            }
+
+            filteredData.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'glassmorphism rounded-lg overflow-hidden shadow-lg transform hover:-translate-y-1 transition-all duration-300 group card-hover';
+                card.innerHTML = `
+                    <div class="relative">
+                        <img src="${item.thumbnail}" alt="${item.title}" class="w-full h-40 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/300x300/1a1a1a/ffffff?text=Image+Not+Found';">
+                        <div class="absolute inset-0 bg-black bg-opacity-20 flex items-center justify-center play-icon">
+                            <button onclick="playMedia(${item.id})" class="bg-pink-600 text-white rounded-full h-12 w-12 flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform duration-300">
+                                <i class="fas fa-play text-xl"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-3">
+                        <h4 class="font-bold text-md truncate text-white">${item.title}</h4>
+                        <p class="text-sm text-gray-400 truncate">${item.artist}</p>
+                        <div class="mt-2 flex items-center justify-between">
+                            <span class="text-xs font-semibold bg-purple-600 text-white px-2 py-1 rounded-full">${item.type}</span>
+                             <a href="${item.driveLink}" target="_blank" class="text-gray-400 hover:text-white transition duration-300">
+                                <i class="fas fa-download"></i>
+                            </a>
+                        </div>
+                    </div>
+                `;
+                contentGrid.appendChild(card);
+            });
+        }
+        
+        function filterContent(category) {
+            renderContent(category);
+            // Update active button style
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                if (btn.textContent === category) {
+                    btn.classList.remove('bg-gray-700', 'text-gray-300');
+                    btn.classList.add('bg-purple-600', 'text-white');
+                } else {
+                    btn.classList.remove('bg-purple-600', 'text-white');
+                    btn.classList.add('bg-gray-700', 'text-gray-300');
+                }
+            });
+        }
+
+        // --- Media Player Modal ---
+        const videoModal = document.getElementById('video-modal');
+        const modalContent = document.getElementById('modal-content');
+        const closeModalBtn = document.getElementById('close-modal');
+
+        function playMedia(id) {
+            const data = getContentData();
+            const item = data.find(d => d.id === id);
+
+            if (item.type === 'MP4' && item.youtubeId) {
+                modalContent.innerHTML = `<iframe class="w-full h-full" src="https://www.youtube.com/embed/${item.youtubeId}?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+                videoModal.classList.remove('hidden');
+            } else if (item.type === 'MP3') {
+                // For MP3, we can just open the download link as a simple player
+                window.open(item.driveLink, '_blank');
+            } else {
+                 showMessage('No playable video source found.');
+            }
+        }
+        
+        closeModalBtn.addEventListener('click', () => {
+            modalContent.innerHTML = '';
+            videoModal.classList.add('hidden');
+        });
+
+        // --- Admin Dashboard Functionality ---
+        const contentForm = document.getElementById('content-form');
+        const formTitle = document.getElementById('form-title');
+        const editIdInput = document.getElementById('edit-id');
+        const cancelEditBtn = document.getElementById('cancel-edit-btn');
+        const contentTableBody = document.getElementById('content-table-body');
+
+        function renderAdminTable() {
+            contentTableBody.innerHTML = '';
+            const data = getContentData();
+            data.forEach(item => {
+                const row = document.createElement('tr');
+                row.className = 'border-b border-gray-800 hover:bg-gray-800';
+                row.innerHTML = `
+                    <td class="p-3">
+                        <div class="font-semibold">${item.title}</div>
+                        <div class="text-gray-400 md:hidden">${item.artist}</div>
+                    </td>
+                    <td class="p-3 hidden md:table-cell">${item.artist}</td>
+                    <td class="p-3 hidden sm:table-cell">${item.category}</td>
+                    <td class="p-3 hidden lg:table-cell">${item.type}</td>
+                    <td class="p-3">
+                        <button onclick="editContent(${item.id})" class="text-blue-400 hover:text-blue-300 mr-3"><i class="fas fa-pencil-alt"></i></button>
+                        <button onclick="deleteContent(${item.id})" class="text-red-400 hover:text-red-300"><i class="fas fa-trash-alt"></i></button>
+                    </td>
+                `;
+                contentTableBody.appendChild(row);
+            });
+        }
+
+        contentForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const id = editIdInput.value;
+            const newItem = {
+                title: document.getElementById('title').value,
+                artist: document.getElementById('artist').value,
+                category: document.getElementById('category').value,
+                type: document.querySelector('input[name="type"]:checked').value,
+                youtubeId: document.getElementById('youtubeId').value,
+                driveLink: document.getElementById('driveLink').value,
+                thumbnail: document.getElementById('thumbnail').value,
+            };
+
+            let data = getContentData();
+            if (id) { // Editing existing item
+                const index = data.findIndex(item => item.id == id);
+                data[index] = { ...data[index], ...newItem };
+                showMessage('Content updated successfully!');
+            } else { // Adding new item
+                newItem.id = Date.now(); // Simple unique ID
+                data.push(newItem);
+                showMessage('Content added successfully!');
+            }
+
+            saveContentData(data);
+            resetForm();
+            renderAdminTable();
+            renderContent(); // Update home page as well
+        });
+
+        function editContent(id) {
+            const data = getContentData();
+            const item = data.find(d => d.id === id);
+            
+            formTitle.textContent = 'Edit Content';
+            editIdInput.value = item.id;
+            document.getElementById('title').value = item.title;
+            document.getElementById('artist').value = item.artist;
+            document.getElementById('category').value = item.category;
+            document.querySelector(`input[name="type"][value="${item.type}"]`).checked = true;
+            document.getElementById('youtubeId').value = item.youtubeId;
+            document.getElementById('driveLink').value = item.driveLink;
+            document.getElementById('thumbnail').value = item.thumbnail;
+            
+            cancelEditBtn.classList.remove('hidden');
+            window.scrollTo(0, 0); // Scroll to top to see the form
+        }
+
+        function deleteContent(id) {
+            if (confirm('Are you sure you want to delete this item?')) {
+                let data = getContentData();
+                data = data.filter(item => item.id !== id);
+                saveContentData(data);
+                renderAdminTable();
+                renderContent();
+                showMessage('Content deleted successfully!');
+            }
+        }
+
+        function resetForm() {
+            contentForm.reset();
+            formTitle.textContent = 'Add New Content';
+            editIdInput.value = '';
+            cancelEditBtn.classList.add('hidden');
+        }
+
+        // --- Custom Message Box ---
+        function showMessage(message) {
+            const messageBox = document.getElementById('message-box');
+            const messageText = document.getElementById('message-text');
+            
+            messageText.textContent = message;
+            messageBox.classList.remove('translate-x-full');
+            messageBox.classList.add('translate-x-0');
+
+            setTimeout(() => {
+                messageBox.classList.remove('translate-x-0');
+                messageBox.classList.add('translate-x-full');
+            }, 3000);
+        }
+
+        // --- Initial Load ---
+        document.addEventListener('DOMContentLoaded', () => {
+            renderContent();
+            renderAdminTable();
+        });
+    </script>
+
+</body>
+</html>
